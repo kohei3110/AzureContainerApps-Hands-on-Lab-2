@@ -1,0 +1,22 @@
+RESOURCE_GROUP=''
+CONTAINERAPPS_NAME=''
+CONTAINERAPPS_ENVIRONMENT=''
+IMAGE=''
+REGISTRY_SERVER=''
+
+# https://learn.microsoft.com/ja-jp/cli/azure/containerapp/job?view=azure-cli-latest
+# ジョブの作成
+az containerapp job create \
+  --name $CONTAINERAPPS_NAME --resource-group $RESOURCE_GROUP --environment $CONTAINERAPPS_ENVIRONMENT \
+  --trigger-type "Schedule" \
+  --replica-timeout 60 --replica-retry-limit 1 --replica-completion-count 1 --parallelism 1 \
+  --image $IMAGE \
+  --registry-server $REGISTRY_SERVER \
+  --registry-identity "system" \
+  --cpu "0.25" --memory "0.5Gi" \
+  --cron-expression "*/5 * * * *"
+
+
+# ジョブの削除
+az containerapp job delete \
+ --name $CONTAINERAPPS_NAME --resource-group $RESOURCE_GROUP
