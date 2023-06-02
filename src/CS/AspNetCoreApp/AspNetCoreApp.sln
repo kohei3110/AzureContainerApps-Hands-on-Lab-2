@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspnet.Backend.Api", "Api\Aspnet.Backend.Api.csproj", "{9D4BBEBB-8FE1-459E-BCF7-79AB2717F52A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspnet.Frontend.Ui", "Web\Aspnet.Frontend.Ui.csproj", "{F57BFD9C-AB91-4E74-B2CA-EC9E4521E4EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D4BBEBB-8FE1-459E-BCF7-79AB2717F52A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D4BBEBB-8FE1-459E-BCF7-79AB2717F52A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D4BBEBB-8FE1-459E-BCF7-79AB2717F52A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D4BBEBB-8FE1-459E-BCF7-79AB2717F52A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F57BFD9C-AB91-4E74-B2CA-EC9E4521E4EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57BFD9C-AB91-4E74-B2CA-EC9E4521E4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F57BFD9C-AB91-4E74-B2CA-EC9E4521E4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F57BFD9C-AB91-4E74-B2CA-EC9E4521E4EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

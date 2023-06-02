@@ -1,0 +1,7 @@
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+
+WORKDIR /app
+
+COPY ./src/CS/AspNetCoreApp/Api/bin/Publish .
+
+ENTRYPOINT [ "dotnet", "Aspnet.Backend.Api.dll" ]
