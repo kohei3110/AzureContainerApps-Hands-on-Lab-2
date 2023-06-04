@@ -7,6 +7,22 @@ Jun. 2023
 
 ### Contents
 
+- [環境の準備](#環境の準備)
+
+- [Exercise 1: 仮想ネットワークへのコンテナー アプリの展開](#exercise-1-仮想ネットワークへのコンテナー-アプリの展開)
+
+- [Exercise 2: API アプリの展開](#exercise-2-api-アプリの展開)
+
+- [Exercise 3: マネージド ID による Azure リソースへのアクセス](#exercise-3-マネージド-id-による-azure-リソースへのアクセス)
+
+- [Exercise 4: サービス間の呼び出し](#exercise-4-サービス間の呼び出し)
+
+- [Exercise 5: cron 式によるスケーリング設定](#exercise-5-cron-式によるスケーリング設定)
+
+- [Exercise 6: Azure Container Apps ジョブの作成](#exercise-6-azure-container-apps-ジョブの作成)
+
+- [Exercise 7: NAT Gateway を使用したトラフィック送信](#exercise-7-nat-gateway-を使用したトラフィック送信)
+
 <br />
 
 ## 環境の準備
@@ -322,7 +338,7 @@ Jun. 2023
 
 <br />
 
-### Task 3: Docker イメージの構築
+### Task 3: Docker イメージの構築 (API アプリ)
 
 - デスクトップ上の "Ubuntu" ショートカットをダブルクリック
 
@@ -364,7 +380,7 @@ Jun. 2023
 
 <br />
 
-### Task 4: イメージのレジストリへのプッシュ
+### Task 4: イメージのレジストリへのプッシュ (API アプリ)
 
 - レジストリへログイン
 
@@ -691,5 +707,541 @@ Jun. 2023
 - Web ブラウザでコピーした FQDN の /api/Product エンドポイントへアクセス
 
   <img src="images/deploy-api-container-07.png" />
+
+<br />
+
+## Exercise 4: サービス間の呼び出し
+
+### Task 1: コンテナー アプリのイングレス構成
+
+- コンテナー アプリの管理ブレードに移動し、"**イングレス**" を選択
+
+- イングレス トラフィックを "**Container Apps 環境に限定**" に変更し、"**保存**" をクリック
+
+  <img src="images/api-ingress.png" />
+
+- "**概要**" タブを選択し、"**アプリケーション URL**" をコピー
+
+- Web ブラウザでコピーした FQDN の /api/Product エンドポイントへアクセス
+
+- アクセスが拒否されることを確認
+
+  <img src="images/access-denied.png" />
+
+<br />
+
+### Task 2: Dapr の有効化
+
+- "**Dapr**" を選択し、"**有効**" に変更、設定を行い "**保存**" をクリック
+
+  - "**アプリ ID**": backend-api
+
+  - "**プロトコル**": HTTP
+
+  - "**API ログ**": オン
+
+  <img src="images/enable-dapr-01.png" />
+
+- 確認のメッセージが表示されるので "**続行**" をクリック
+
+  <img src="images/enable-dapr-02.png" />
+
+<br />
+
+### Task 3: Docker イメージの作成 (Web アプリ)
+
+- デスクトップ上の "Ubuntu" ショートカットをダブルクリック
+
+- 操作用のプロンプトが起動
+
+- WSL で Windows 側のマウントされたディレクトリへ移動
+
+  ```
+  cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-2
+  ```
+- docker build コマンドを実行しイメージを構築
+
+  <details>
+    <summary>C#</summary>
+
+    ```
+    docker build -t yourregistry.azurecr.io/app:v1 -f .docker/CS/dockerfile_frontend_ui .
+    ```
+
+    ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
+
+    ※ コマンドのオプション
+
+    - **-t**: 名前とタグを **名前:タグ** の形式で指定
+
+    - **-f**: dockerfile のパスを指定
+
+  </details>
+
+  <details>
+    <summary>Java</summary>
+  </details>
+
+- docker images コマンドを実行し、イメージが表示されることを確認
+
+  ```
+  docker images
+  ```
+
+<br />
+
+### Task 4: イメージのレジストリへのプッシュ (Web アプリ)
+
+- docker push を使用してレジストリへプッシュ
+
+  ```
+  docker push yourregistry.azurecr.io/app:v1
+  ```
+
+  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+- Azure ポータルで作成したコンテナー レジストリの管理ブレードへアクセス
+
+- 左側のメニューから「**リポジトリ**」を選択
+
+  <img src="images/acr-repository-03.png" />
+
+- リポジトリ内のイメージを確認
+
+  <img src="images/acr-repository-04.png" />
+
+<br />
+
+### Task 5: コンテナー アプリの作成 (Web アプリ)
+
+- "**＋リソースの作成**" をクリック
+
+  <img src="images/add-resources.png" />
+
+- カテゴリから "**コンテナー**" を選択し、、コンテナー アプリの "**作成**" をクリック
+
+  <img src="images/create-container-apps-01.png" />
+
+- コンテナー アプリの作成
+
+  - "**基本**"
+
+    - "**プロジェクトの詳細**"
+
+      - "**サブスクリプション**": ワークショップで使用中のサブスクリプション
+
+      - "**リソース グループ**": ワークショップで使用中のリソース グループ
+
+      - "**コンテナー アプリ名**": aca-workshop-web (任意)
+  
+  - "**Container Apps 環境**"
+
+    ※ API のコンテナー アプリと同じ 地域、Container Apps 環境を選択
+
+    <img src="images/create-frontend-ui-01.png" />
+
+  - "**コンテナー**"
+
+    - "**クイックスタート イメージを使用する**": オフ
+
+    - "**コンテナーの詳細**"
+
+      - "**名前**": mcw-frontend-ui (任意)
+
+      - "**イメージのソース**": Azure Container Registry
+
+      - "**レジストリ**": ワークショップで使用中のコンテナー レジストリを選択
+
+      - "**イメージ**": app
+
+      - "**イメージ タグ**": v1
+    
+    - "**コンテナーリソースの割り当て**"
+
+      - "**CPU とメモリ**": 0.25 CPU コア、0.5 Gi メモリ
+
+    - "**環境変数**"
+
+      ※ Dapr アプリ ID と Application Insights インストルメンテーション キーを環境変数として追加
+
+      - Dapr アプリ ID
+
+        - "**名前**": AppId
+
+        - "**値**": backend-api (API アプリの Dapr アプリ ID)
+      
+      - Application Insights のインストルメンテーション キー
+
+        - "**名前**": 
+
+    <img src="images/create-frontend-ui-02.png" />
+
+    ※インストルメンテーション キーは Application Insights 管理ブレードのプロパティから取得
+
+    <img src="images/application-insights-key.png" />
+
+  - "**イングレス**"
+
+    - "**イングレス**": 有効
+
+    - "**イングレス トラフィック**": どこからでもトラフィックを受け入れます
+
+    - "**イングレス タイプ**": HTTP
+
+    - "**ターゲット ポート**": 80
+
+    <img src="images/create-frontend-ui-03.png" />
+
+- "**確認と作成**" をクリック
+
+- 指定した内容に問題がないことを確認し、"**作成**" をクリック
+
+  <img src="images/create-frontend-ui-04.png" />
+
+- 作成したコンテナー アプリの管理ブレードへ移動し、"**Dapr**" を選択
+
+- Dapr を "**有効**" に変更、設定を行い "**保存**" をクリック
+
+  - "**アプリ ID**": frontend-ui
+
+  - "**プロトコル**": HTTP
+
+  - "**API ログ**": オン
+
+  <img src="images/create-frontend-ui-05.png" />
+
+- "**概要**" タブを選択し、"**アプリケーション URL**" をクリック
+
+- 新しいタブでアプリが表示
+
+  <img src="images/aspnet-frontend-ui.png" />
+
+<br />
+
+## Exercise 5: cron 式によるスケーリング設定
+
+### Task 1: スケール ルールの設定
+
+- コンテナー アプリ (Web アプリ) の管理ブレードへ移動、"**スケールとレプリカ**" を選択
+
+- "**編集とデプロイ**" をクリック
+
+  <img src="images/keda-scaling-01.png" />
+
+- "**スケーリング**" タブを選択し、"**＋追加**" をクリック
+
+  <img src="images/keda-scaling-02.png" />
+
+- スケール ルールの追加
+
+  - "**スケール ルールの詳細**"
+
+    - "**ルール名**": cron-scaling
+
+    - "**種類**": カスタム
+
+    - "**カスタム ルールの種類**": cron
+  
+  - "**メタデータ**"
+
+    - "**名前**": timezone / "**値**": Asia/Tokyo
+
+    - "**名前**": start / "**値**": 0 14 * * * (任意)
+
+    - "**名前**": end / "**値**": 0 15 * * * (任意)
+
+    - "**名前**": desireReplicas / "**値**": 3
+
+    <img src="images/keda-scaling-03.png" />
+
+    ※ 開始、終了時間は近い時間を指定
+
+- ルールが追加されたことを確認し、"**作成**" をクリック
+
+  <img src="images/keda-scaling-04.png" />
+
+- 新しいリビジョンを展開
+
+- 指定した時間以降にメトリック (Replica Count) を確認
+
+  <img src="images/keda-scaling-05.png" />
+
+<br />
+
+## Exercise 6: Azure Container Apps ジョブの作成
+
+### Task 1: ローカルでのアプリケーションの実行
+
+<details>
+  <summary>C#</summary>
+
+  - Visual Studio Code "**Terminal**" - "**New Terminal**" を選択し、ウィンドウ下部にターミナルを表示
+
+  - Api ディレクトリへ移動
+
+    ```
+    cd src/CS/Job
+    ```
+
+  - アプリケーションを実行
+
+    ```
+    dotnet run
+    ```
+  
+  - ターミナルに実行結果が表示
+
+    <img src="images/dotnet-run-03.png" />
+</details>
+
+<details>
+  <summary>Java</summary>
+</details>
+
+### Task 2: Docker イメージの作成 (Web アプリ)
+
+- デスクトップ上の "Ubuntu" ショートカットをダブルクリック
+
+- 操作用のプロンプトが起動
+
+- WSL で Windows 側のマウントされたディレクトリへ移動
+
+  ```
+  cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-2
+  ```
+- docker build コマンドを実行しイメージを構築
+
+  <details>
+    <summary>C#</summary>
+
+    ```
+    docker build -t yourregistry.azurecr.io/job:v1 -f .docker/CS/dockerfile_job .
+    ```
+
+    ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
+
+    ※ コマンドのオプション
+
+    - **-t**: 名前とタグを **名前:タグ** の形式で指定
+
+    - **-f**: dockerfile のパスを指定
+
+  </details>
+
+  <details>
+    <summary>Java</summary>
+  </details>
+
+- docker images コマンドを実行し、イメージが表示されることを確認
+
+  ```
+  docker images
+  ```
+
+<br />
+
+### Task 3: イメージのレジストリへのプッシュ (Web アプリ)
+
+- docker push を使用してレジストリへプッシュ
+
+  ```
+  docker push yourregistry.azurecr.io/job:v1
+  ```
+
+  ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
+
+- Azure ポータルで作成したコンテナー レジストリの管理ブレードへアクセス
+
+- 左側のメニューから「**リポジトリ**」を選択
+
+  <img src="images/acr-repository-05.png" />
+
+- リポジトリ内のイメージを確認
+
+  <img src="images/acr-repository-06.png" />
+
+<br />
+
+### Task 4: スケジュール ジョブの作成
+
+- ポータル画面の右上の <img src="images/icon-cloud-shell.png" /> をクリックし、Cloud Shell を表示
+
+- Azure CLI を使用し、スケジュールされたジョブを作成
+
+  ```
+  az containerapp job create \
+    --name "your_container_apps" --resource-group "your_resource_group" --environment "your_container_apps_env" \
+    --trigger-type "Schedule" \
+    --replica-timeout 60 --replica-retry-limit 1 --replica-completion-count 1 --parallelism 1 \
+    --image "yourregistry.azurecr.io/job:v1" \
+    --registry-server "yourregistry.azurecr.io" \
+    --registry-identity "system" \
+    --cpu "0.25" --memory "0.5Gi" \
+    --cron-expression "*/5 * * * *"
+  ```
+
+  ※ "**your_container_apps**: Azure Container Apps ジョブの名前
+
+  ※ "**your_resource_group**:: リソース グループ名
+
+  ※ "**your_container_apps_env**": Container Apps 環境
+
+  ※ "**youreregistry**": コンテナ レジストリのレジストリ名
+
+  ※ az containerapp job コマンド: https://learn.microsoft.com/ja-jp/cli/azure/containerapp/job?view=azure-cli-latest
+
+<br />
+
+### Task 5: ジョブの実行履歴の確認
+
+- 作成したジョブの管理ブレードへ移動
+
+  <img src="images/aca-job-01.png" />
+
+- "**Excution history**" を選択し、実行履歴を確認、"**View logs**" をクリック
+
+  <img src="images/aca-job-02.png" />
+
+- ログの画面が表示
+
+  <img src="images/aca-job-03.png" />
+
+- 展開して詳細を確認
+
+  <img src="images/aca-job-04.png" />
+
+<br />
+
+## Exercise 7: NAT Gateway を使用したトラフィック送信
+
+### Task 1: NAT Gateway の作成
+
+- "**＋リソースの作成**" をクリック
+
+  <img src="images/add-resources.png" />
+
+- テキストボックスに "**NAT**" と入力、表示される候補より "**NAT ゲートウェイ**" を選択
+
+  <img src="images/create-nat-gateway-01.png" />
+
+- "**作成**" - "**NAT ゲートウェイ**" をクリック
+
+  <img src="images/create-nat-gateway-02.png" />
+
+- NAT ゲートウェイの作成
+
+  - "**基本**"
+
+    - "**プロジェクトの詳細**"
+
+      - "**サブスクリプション**": ワークショップで使用中のサブスクリプション
+
+      - "**リソース グループ**": ワークショップで使用中のリソース グループ
+
+    - "**インスタンスの詳細**"
+
+      - "**NAT ゲートウェイ名**": ng-workshop-q4 (任意)
+
+      - "**地域**": リソース グループと同じ地域
+
+      - "**可用性ゾーン**": ゾーンなし
+
+      - "**TCP アイドル タイムアウト (分)**": 4 (既定)
+
+    <img src="images/create-nat-gateway-03.png" />
+
+  - "**送信 IP**"
+
+    - "**パブリック IP アドレス**": 新規作成 (名前: pip-ng-workshop-q4 (任意))
+
+    <img src="images/create-nat-gateway-04.png" />
+
+  - "**サブネット**"
+
+    - "**仮想ネットワーク**": なし
+
+    <img src="images/create-nat-gateway-06.png" />
+
+- "**確認および作成**" をクリック
+
+- 指定した内容に問題がないことを確認し、"**作成**" をクリック
+
+  <img src="images/create-nat-gateway-07.png" />
+
+- NAT ゲートウェイの管理ブレードへ移動、"**送信 IP**" をクリック
+
+  ※ 表示される IP アドレスをコピー
+
+  <img src="images/create-nat-gateway-08.png" />
+
+<br />
+
+### Task 2: SQL Server のファイアウォールの構成
+
+- SQL Server の管理ブレードへ移動、"**ネットワーク**" を選択
+
+  <img src="images/sql-firewall-rule-01.png" />
+
+- ファイアウォール規則の "**＋ファイアウォール ルールの追加**" をクリック
+
+  - "**ルール名**": NatGateway (任意)
+
+  - "**開始 IP**": NAT ゲートウェイの送信 IP
+
+  - "**終了 IP**": NAT ゲートウェイの送信 IP
+
+    <img src="images/sql-firewall-rule-02.png" />
+
+- "**Azure サービスおよびリソースにこのサーバーへのアクセスを許可する**" のチェックボックスをオフに指定
+
+- "**保存**" をクリック
+
+  <img src="images/sql-firewall-rule-03.png" />
+
+### Task 3:  アプリケーションの動作確認
+
+- コンテナー アプリ (Web アプリ) の管理ブレードへ移動
+
+- アプリケーション URL をクリックし、新しいタブでアプリケーションへアクセス
+
+  ※ データが表示されないことを確認
+
+  <img src="images/aspnet-frontend-ui-no-data.png" />
+
+  ※ データが表示される場合は、API アプリのリビジョンを再起動
+
+  ```
+  az containerapp revision restart -n your_container_apps -g your_resource_group --revision revision_name
+  ```
+
+- Application Insights の管理ブレードへ移動、"**失敗した要求**" をクリック
+
+  <img src="images/application-insights-summary.png" />
+
+- "**上位 3 例外の種類**" - "**SqlException**" をクリック
+
+- 右ペインで接続に使用される IP アドレスが許可されていないことが原因であることを確認
+
+  <img src="images/sql-firewall-rule-04.png" />
+
+<br />
+
+### Task 3: サブネットへ NAT ゲートウェイを関連付け
+
+- NAT ゲートウェイの管理ブレードへ移動、"**サブネット**" を選択
+
+- コンテナー アプリを展開した仮想ネットワーク、サブネットを選択
+
+  <img src="images/create-nat-gateway-09.png" />
+
+- "**保存**" をクリック
+
+- コンテナー アプリ (Web アプリ) の管理ブレードへ移動
+
+- アプリケーション URL をクリックし、新しいタブでアプリケーションへアクセス
+
+  ※ SQL Database から取得したデータが表示されることを確認
+
+  <img src="images/aspnet-frontend-ui.png" />
 
 <br />
