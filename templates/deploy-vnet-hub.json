@@ -1,0 +1,131 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetwork": {
+            "type": "string",
+            "defaultValue": "vnet-hub",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "addressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16",
+            "metadata": {
+                "description": "IPv4 アドレス空間"
+            }
+        },
+        "subnet1": {
+            "type": "string",
+            "defaultValue": "Subnet-1",
+            "metadata": {
+                "description": "サブネット名 (1)"
+            }
+        },
+        "subnet1Prefix": {
+            "type": "string",
+            "defaultValue": "10.0.1.0/24",
+            "metadata": {
+                "description": "サブネット アドレス範囲 (1)"
+            }
+        },
+        "bastionPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.10.0/24",
+            "metadata": {
+                "description": "Bastion サブネット アドレス範囲"
+            }
+        },
+        "bastionHost": {
+            "type": "string",
+            "defaultValue": "bas-1",
+            "metadata": {
+                "description": "Bastion Host 名"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {
+        "bastionPip": "[concat('pip-', parameters('bastionHost'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('virtualNetwork')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('addressPrefix')]"
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "subnets",
+                    "apiVersion": "2020-11-01",
+                    "name": "AzureBastionSubnet",
+                    "properties": {
+                        "addressPrefix": "[parameters('bastionPrefix')]"
+                    },
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetwork'))]"
+                    ]
+                },
+                {
+                    "type": "subnets",
+                    "apiVersion": "2020-11-01",
+                    "name": "[parameters('subnet1')]",
+                    "properties": {
+                        "addressPrefix": "[parameters('subnet1Prefix')]"
+                    },
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetwork'))]",
+                        "[resourceid('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), 'AzureBastionSubnet')]"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "name": "[variables('bastionPip')]",
+            "location":"[resourceGroup().location]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
+            "type": "Microsoft.Network/bastionHosts",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('bastionHost')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), 'AzureBastionSubnet')]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('bastionPip'))]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetwork'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetwork'), 'AzureBastionSubnet')]",
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('bastionPip'))]"
+            ]
+        } 
+    ],
+    "outputs": {}
+}
