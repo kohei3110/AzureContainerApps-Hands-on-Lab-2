@@ -2,6 +2,10 @@
 
 <br />
 
+<img src="images/mcw-workshop-q4.png" />
+
+<br />
+
 ### ディレクトリ構成
 ┣ .docker  
 ┃   ┣ CS  
