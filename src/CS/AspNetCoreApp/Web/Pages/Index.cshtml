@@ -1,0 +1,34 @@
+﻿@page
+@using Aspnet.Frontend.Ui.Models
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <div>
+        <table>
+            <thead>
+                <th width="40">Id</th>
+                <th width="250">Name</th>
+                <th width="150">Category</th>
+                <th width="100">Color</th>
+                <th width="150">List Price ($)</th>
+                <th width="150">Sell Start Date</th>
+            </thead>
+
+            @foreach( var p in (List<Product>)ViewData["products"] )
+            {
+                <tr>
+                    <td>@p.ProductId</td>
+                    <td>@p.ProductName</td>
+                    <td>@p.CategoryName</td>
+                    <td>@p.Color</td>
+                    <td>@p.StandardCost</td>
+                    <td>@p.SellStartDate</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
