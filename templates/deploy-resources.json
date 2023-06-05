@@ -46,12 +46,14 @@
         },
         "logAnalyticsWorkspace": {
             "type": "string",
+            "defaultValue": "log-1",
             "metadata": {
                 "description": "Log Analytics Workspace"
             }
         },
         "applicationInsightsName": {
             "type": "string",
+            "defaultValue": "appi-workshop-q4",
             "metadata": {
                 "description": "Application Insights"
             }
@@ -82,7 +84,7 @@
             }
         },
         "sqlAdministratorPassword": {
-            "type": "string",
+            "type": "securestring",
             "metadata": {
                 "description": "パスワード"
             }
@@ -99,10 +101,19 @@
             "name": "[parameters('networkSecurityGroup-1')]",
             "location": "[variables('location')]",
             "properties": {
+                "securityRules": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2022-09-01",
+            "name": "[parameters('networkSecurityGroup-ContainerApps')]",
+            "location": "[variables('location')]",
+            "properties": {
                 "securityRules": [
                     {
                         "name": "Allow-HTTP-Inbound",
-                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroup-1'), 'Allow-HTTP-Inbound')]",
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroup-1'), 'Allow-HTTP-Inbound')]",
                         "type": "Microsoft.Network/networkSecurityGroups/securityRules",
                         "properties": {
                             "protocol": "Tcp",
@@ -118,20 +129,10 @@
                             "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": []
                         }
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2022-09-01",
-            "name": "[parameters('networkSecurityGroup-ContainerApps')]",
-            "location": "[variables('location')]",
-            "properties": {
-                "securityRules": [
+                    },
                     {
                         "name": "Allow-HTTPS-Inbound",
-                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroup-ContainerApps'), 'Allow-HTTPS-Inbound')]",
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/securityRules', parameters('networkSecurityGroup-ContainerApps'), 'Allow-HTTPS-Inbound')]",
                         "type": "Microsoft.Network/networkSecurityGroups/securityRules",
                         "properties": {
                             "protocol": "Tcp",
@@ -263,8 +264,7 @@
             },
             "properties": {
                 "zoneRedundancy": "Disabled",
-                "publicNetworkAccess": "Disabled"
-            }
+                "publicNetworkAccess": "Enabled"            }
         },
         {
             "type": "Microsoft.KeyVault/vaults",
@@ -304,6 +304,9 @@
                     "apiVersion": "2022-08-01-preview",
                     "name": "AdventureWorksLT",
                     "location": "[variables('location')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
+                    ],
                     "sku": {
                         "tier": "GeneralPurpose",
                         "name": "GP_S_Gen5_1"
