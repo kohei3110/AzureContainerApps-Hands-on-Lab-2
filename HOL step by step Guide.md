@@ -399,7 +399,7 @@ Jun. 2023
 - docker push を使用してレジストリへプッシュ
 
   ```
-  docker push yourregistry.azurecr.io/app:v1
+  docker push yourregistry.azurecr.io/api:v1
   ```
 
   ※ yourreregistry.azurecr.io を作成したコンテナー レジストリのログイン サーバーに変更
