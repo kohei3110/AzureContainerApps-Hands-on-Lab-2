@@ -872,7 +872,9 @@ Jun. 2023
       
       - Application Insights のインストルメンテーション キー
 
-        - "**名前**": 
+        - "**名前**": ApplicationInsights__InstrumentationKey
+
+        - "**値**": インストルメンテーション キー
 
     <img src="images/create-frontend-ui-02.png" />
 
