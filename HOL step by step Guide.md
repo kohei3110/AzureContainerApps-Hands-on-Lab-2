@@ -27,7 +27,7 @@ Jun. 2023
 
 ## 環境の準備
 
-<img src="images/development-environment.png" />
+<img src="images/mcw-preparation.png" />
 
 ### SQL Server の設定
 
@@ -155,6 +155,8 @@ Jun. 2023
 
 ## Exercise 1: 仮想ネットワークへのコンテナー アプリの展開
 
+<img src="images/mcw-exercise-1.png" />
+
 ### Task 1: サブネットの追加
 
 - [Azure ポータル](#https://portal.azure.com)へアクセス
@@ -264,6 +266,8 @@ Jun. 2023
 <br />
 
 ## Exercise 2: API アプリの展開
+
+<img src="images/mcw-exercise-2.png" />
 
 ### Task 1: ローカルでのアプリケーションの実行
 
@@ -540,6 +544,8 @@ Jun. 2023
 
 ## Exercise 3: マネージド ID による Azure リソースへのアクセス
 
+<img src="images/mcw-exercise-3.png" />
+
 ### Task 1: システム割り当て済みマネージド ID の有効化
 
 - コンテナー アプリの管理ブレードから "**ID**" を選択
@@ -711,6 +717,8 @@ Jun. 2023
 <br />
 
 ## Exercise 4: サービス間の呼び出し
+
+<img src="images/mcw-exercise-4.png" />
 
 ### Task 1: コンテナー アプリのイングレス構成
 
@@ -922,6 +930,8 @@ Jun. 2023
 
 ## Exercise 5: cron 式によるスケーリング設定
 
+<img src="images/mcw-exercise-5.png" />
+
 ### Task 1: スケール ルールの設定
 
 - コンテナー アプリ (Web アプリ) の管理ブレードへ移動、"**スケールとレプリカ**" を選択
@@ -971,6 +981,8 @@ Jun. 2023
 <br />
 
 ## Exercise 6: Azure Container Apps ジョブの作成
+
+<img src="images/mcw-exercise-6.png" />
 
 ### Task 1: ローカルでのアプリケーションの実行
 
@@ -1115,6 +1127,8 @@ Jun. 2023
 <br />
 
 ## Exercise 7: NAT Gateway を使用したトラフィック送信
+
+<img src="images/mcw-exercise-7.png" />
 
 ### Task 1: NAT Gateway の作成
 

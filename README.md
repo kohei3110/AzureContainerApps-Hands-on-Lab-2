@@ -14,7 +14,7 @@
 ┃   ┃   ┗ dockerfile_job (.NET コンソール アプリ)  
 ┃   ┗ Java (Java アプリの dockerfile)  
 ┣ deploy  
-┃   ┗ container-app-job.azcli (Azure Cli コマンド - ジョブの作成・削除)  
+┃   ┗ container-apps-job.azcli (Azure Cli コマンド - ジョブの作成・削除)  
 ┣ src  
 ┃   ┣ CS (C# アプリのソース コード)  
 ┃   ┃   ┣ AspNetCoreApp  
