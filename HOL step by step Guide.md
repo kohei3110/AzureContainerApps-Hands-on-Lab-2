@@ -37,7 +37,7 @@ Jun. 2023
 
 - "**管理者の設定**" をクリック
 
-  <img src="images/azure-ad-authentication-01.png />
+  <img src="images/azure-ad-authentication-01.png" />
 
 - ポータルへのサインインに使用しているユーザーを選択
 
@@ -145,11 +145,11 @@ Jun. 2023
   git remote -v
   ```
 
-  - **クローン先の GitHub URL が出力されたら OK
-  
+  - \*\*クローン先の GitHub URL が出力されたら OK
+
     - <自分のアカウント名>/AzureContainerApps-Hands-on-Lab-2 になっていることを確認
-    
-    -  (kohei3110/AzureContainerApps-Hands-on-Lab-2になっていないことを確認)** 
+
+    - (kohei3110/AzureContainerApps-Hands-on-Lab-2 になっていないことを確認)\*\*
 
 <br />
 
@@ -242,9 +242,9 @@ Jun. 2023
     - "**Container Apps 環境**": 作成した Container Apps 環境が選択されていることを確認
 
     <img src="images/create-container-apps-03.png" />
-  
+
   - "**コンテナー**"
-  
+
     - "**クイックスタート イメージを使用する**": チェック
 
     <img src="images/create-container-apps-04.png" />
@@ -274,51 +274,51 @@ Jun. 2023
 <details>
   <summary>C#</summary>
 
-  - [Azure ポータル](#https://portal.azure.com)へアクセス
+- [Azure ポータル](#https://portal.azure.com)へアクセス
 
-  - 事前展開済みの SQL Database である "**AdventureWorksLT**" の管理ブレードへ移動し、**接続文字列** をクリック
+- 事前展開済みの SQL Database である "**AdventureWorksLT**" の管理ブレードへ移動し、**接続文字列** をクリック
 
-  - ADO.NET (SQL 認証) の接続文字列をコピー
+- ADO.NET (SQL 認証) の接続文字列をコピー
 
-  - Visual Studio Code の Explorer で "**src**" - "**CS**" - "**AspNetCoreApp**" - "**Api**" を選択
+- Visual Studio Code の Explorer で "**src**" - "**CS**" - "**AspNetCoreApp**" - "**Api**" を選択
 
-  - "**New File (<img src="images/add-new-file.png" width="20" />)**" をクリック
+- "**New File (<img src="images/add-new-file.png" width="20" />)**" をクリック
 
-    <img src="images/dotnet-run-01.png" />
+  <img src="images/dotnet-run-01.png" />
 
-  - ファイル名を "**appsettings.Development.json**" に指定
+- ファイル名を "**appsettings.Development.json**" に指定
 
-  - 以下のコードを記述し、ファイルを保存
+- 以下のコードを記述し、ファイルを保存
 
-    ```
-    {
-        "sqlConnectionString": "SQL Database への接続文字列"
-    }
-    ```
+  ```
+  {
+      "sqlConnectionString": "SQL Database への接続文字列"
+  }
+  ```
 
-    ※ 先の手順でコピーした SQL Database への文字列を使用
+  ※ 先の手順でコピーした SQL Database への文字列を使用
 
-    ※ Password を指定
+  ※ Password を指定
 
-  - "**Terminal**" - "**New Terminal**" を選択し、ウィンドウ下部にターミナルを表示
+- "**Terminal**" - "**New Terminal**" を選択し、ウィンドウ下部にターミナルを表示
 
-  - Api ディレクトリへ移動
+- Api ディレクトリへ移動
 
-    ```
-    cd src/CS/AspNetCoreApp/Api
-    ```
+  ```
+  cd src/CS/AspNetCoreApp/Api
+  ```
 
-  - アプリケーションを実行
+- アプリケーションを実行
 
-    ```
-    dotnet run
-    ```
+  ```
+  dotnet run
+  ```
 
-  - Web ブラウザを起動し、"**http://localhost:5000/api/Product/**" へアクセス
+- Web ブラウザを起動し、"**http://localhost:5000/api/Product/**" へアクセス
 
-    <img src="images/dotnet-run-02.png" />
+  <img src="images/dotnet-run-02.png" />
 
-    ※ SQL Database から取得したデータが表示
+  ※ SQL Database から取得したデータが表示
 
 </details>
 
@@ -353,22 +353,23 @@ Jun. 2023
   ```
   cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-2
   ```
+
 - docker build コマンドを実行しイメージを構築
 
   <details>
     <summary>C#</summary>
 
-    ```
-    docker build -t yourregistry.azurecr.io/api:v1 -f .docker/CS/dockerfile_backend_api .
-    ```
+  ```
+  docker build -t yourregistry.azurecr.io/api:v1 -f .docker/CS/dockerfile_backend_api .
+  ```
 
-    ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
+  ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
 
-    ※ コマンドのオプション
+  ※ コマンドのオプション
 
-    - **-t**: 名前とタグを **名前:タグ** の形式で指定
+  - **-t**: 名前とタグを **名前:タグ** の形式で指定
 
-    - **-f**: dockerfile のパスを指定
+  - **-f**: dockerfile のパスを指定
 
   </details>
 
@@ -501,7 +502,7 @@ Jun. 2023
     - "**CPU コア**": 0.25
 
     - "**メモリ (Gi)**": 0.5
-  
+
   - "**環境変数**"
 
     ※ "**＋追加**" をクリックし、以下２つを環境変数として追加
@@ -516,7 +517,7 @@ Jun. 2023
 
     - Application Insights インストルメンテーション キー
 
-      - "**名前**": ApplicationInsights__InstrumentationKey
+      - "**名前**": ApplicationInsights\_\_InstrumentationKey
 
       - "**ソース**": シークレットの参照
 
@@ -767,22 +768,23 @@ Jun. 2023
   ```
   cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-2
   ```
+
 - docker build コマンドを実行しイメージを構築
 
   <details>
     <summary>C#</summary>
 
-    ```
-    docker build -t yourregistry.azurecr.io/app:v1 -f .docker/CS/dockerfile_frontend_ui .
-    ```
+  ```
+  docker build -t yourregistry.azurecr.io/app:v1 -f .docker/CS/dockerfile_frontend_ui .
+  ```
 
-    ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
+  ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
 
-    ※ コマンドのオプション
+  ※ コマンドのオプション
 
-    - **-t**: 名前とタグを **名前:タグ** の形式で指定
+  - **-t**: 名前とタグを **名前:タグ** の形式で指定
 
-    - **-f**: dockerfile のパスを指定
+  - **-f**: dockerfile のパスを指定
 
   </details>
 
@@ -841,7 +843,7 @@ Jun. 2023
       - "**リソース グループ**": ワークショップで使用中のリソース グループ
 
       - "**コンテナー アプリ名**": aca-workshop-web (任意)
-  
+
   - "**Container Apps 環境**"
 
     ※ API のコンテナー アプリと同じ 地域、Container Apps 環境を選択
@@ -863,7 +865,7 @@ Jun. 2023
       - "**イメージ**": app
 
       - "**イメージ タグ**": v1
-    
+
     - "**コンテナーリソースの割り当て**"
 
       - "**CPU とメモリ**": 0.25 CPU コア、0.5 Gi メモリ
@@ -877,10 +879,10 @@ Jun. 2023
         - "**名前**": AppId
 
         - "**値**": backend-api (API アプリの Dapr アプリ ID)
-      
+
       - Application Insights のインストルメンテーション キー
 
-        - "**名前**": ApplicationInsights__InstrumentationKey
+        - "**名前**": ApplicationInsights\_\_InstrumentationKey
 
         - "**値**": インストルメンテーション キー
 
@@ -953,14 +955,14 @@ Jun. 2023
     - "**種類**": カスタム
 
     - "**カスタム ルールの種類**": cron
-  
+
   - "**メタデータ**"
 
     - "**名前**": timezone / "**値**": Asia/Tokyo
 
-    - "**名前**": start / "**値**": 0 14 * * * (任意)
+    - "**名前**": start / "**値**": 0 14 \* \* \* (任意)
 
-    - "**名前**": end / "**値**": 0 15 * * * (任意)
+    - "**名前**": end / "**値**": 0 15 \* \* \* (任意)
 
     - "**名前**": desireReplicas / "**値**": 3
 
@@ -989,24 +991,25 @@ Jun. 2023
 <details>
   <summary>C#</summary>
 
-  - Visual Studio Code "**Terminal**" - "**New Terminal**" を選択し、ウィンドウ下部にターミナルを表示
+- Visual Studio Code "**Terminal**" - "**New Terminal**" を選択し、ウィンドウ下部にターミナルを表示
 
-  - Api ディレクトリへ移動
+- Api ディレクトリへ移動
 
-    ```
-    cd src/CS/Job
-    ```
+  ```
+  cd src/CS/Job
+  ```
 
-  - アプリケーションを実行
+- アプリケーションを実行
 
-    ```
-    dotnet run
-    ```
-  
-  - ターミナルに実行結果が表示
+  ```
+  dotnet run
+  ```
 
-    <img src="images/dotnet-run-03.png" />
-</details>
+- ターミナルに実行結果が表示
+
+      <img src="images/dotnet-run-03.png" />
+
+  </details>
 
 <details>
   <summary>Java</summary>
@@ -1023,22 +1026,23 @@ Jun. 2023
   ```
   cd /mnt/c/Users/AzureUser/Documents/AzureContainerApps-Hands-on-Lab-2
   ```
+
 - docker build コマンドを実行しイメージを構築
 
   <details>
     <summary>C#</summary>
 
-    ```
-    docker build -t yourregistry.azurecr.io/job:v1 -f .docker/CS/dockerfile_job .
-    ```
+  ```
+  docker build -t yourregistry.azurecr.io/job:v1 -f .docker/CS/dockerfile_job .
+  ```
 
-    ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
+  ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
 
-    ※ コマンドのオプション
+  ※ コマンドのオプション
 
-    - **-t**: 名前とタグを **名前:タグ** の形式で指定
+  - **-t**: 名前とタグを **名前:タグ** の形式で指定
 
-    - **-f**: dockerfile のパスを指定
+  - **-f**: dockerfile のパスを指定
 
   </details>
 
@@ -1214,7 +1218,7 @@ Jun. 2023
 
   <img src="images/sql-firewall-rule-03.png" />
 
-### Task 3:  アプリケーションの動作確認
+### Task 3: アプリケーションの動作確認
 
 - コンテナー アプリ (Web アプリ) の管理ブレードへ移動
 
