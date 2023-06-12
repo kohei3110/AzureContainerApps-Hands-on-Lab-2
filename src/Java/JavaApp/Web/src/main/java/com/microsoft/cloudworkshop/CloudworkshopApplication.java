@@ -5,13 +5,16 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-
-import org.json.JSONObject;
+import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.cloudworkshop.models.Product;
 
 @SpringBootApplication
 @Controller
@@ -28,7 +31,7 @@ public class CloudworkshopApplication {
 	}
 
 	@GetMapping(value = "/")
-	public void getProducts() throws Exception {
+	public String getProducts(Model model) throws Exception {
 		String dapr_url = "http://localhost:" + DAPR_HTTP_PORT + "/api/Product";
 		HttpRequest request = HttpRequest.newBuilder()
 				.GET()
@@ -37,7 +40,10 @@ public class CloudworkshopApplication {
 				.header("dapr-app-id", "backend-api")
 				.build();
 		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-		System.out.println(response.body());
+		ObjectMapper mapper = new ObjectMapper();
+		List<Product> products = mapper.readValue(response.body(), List.class);
+		model.addAttribute("productlist", products);
+		return "index";
 	}
 
 }

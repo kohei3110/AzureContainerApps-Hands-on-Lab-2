@@ -8,14 +8,26 @@
     <header></header>
     <main>
         <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Color</th>
-                <th>List Price ($)</th>
-                <th>Sell Start Date</th>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Color</th>
+                    <th>List Price ($)</th>
+                    <th>Sell Start Date</th>
+                </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${productlist}" th:object="${product}" >
+                <td th:text="${product.ProductId}"></td>
+                <td th:text="${product.CategoryName}"></td>
+                <td th:text="${product.ProductName}"></td>
+                <td th:text="${product.Color}"></td>
+                <td th:text="${product.StandardCost}"></td>
+                <td th:text="${product.SellStartDate}"></td>
             </tr>
+        </tbody>
     </main>
     <footer>
     </footer>
