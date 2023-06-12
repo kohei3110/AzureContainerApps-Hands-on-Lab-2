@@ -28,6 +28,7 @@ public class CloudworkshopApplication {
 	public List<Product> getProduct() {
 		List<Product> products = new ArrayList<>();
 		productRepository.findAll().forEach(products::add);
+		System.out.println("request received.");
 		return products;
 	}
 }
