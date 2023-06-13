@@ -216,8 +216,6 @@ Jun. 2023
 
 - "**＋追加**" をクリック
 
-  <img src="images/add-secret-01.png" />
-
 - SQL Database への接続文字列をシークレットへ追加
 
   - "**キー**": sqlconnectionstring
@@ -304,8 +302,6 @@ Jun. 2023
 
 - 新しく展開したリビジョンの実行状態が Running であることを確認
 
-  <img src="images/deploy-api-container-06.png" />
-
 - "**概要**" タブを選択し、"**アプリケーション URL**" をコピー
 
 - Web ブラウザでコピーした FQDN の /api/Product エンドポイントへアクセス
@@ -360,8 +356,6 @@ Jun. 2023
 
 - コンテナー イメージの "**＋追加**" - "**アプリ コンテナー**" をクリック
 
-  <img src="images/deploy-api-container-03.png" />
-
 - コンテナーの追加
 
   - "**コンテナーの詳細**"
@@ -393,6 +387,8 @@ Jun. 2023
         - "**名前**": AppId
 
         - "**値**": backend-api (API アプリの Dapr アプリ ID)
+
+    <img src="images/create-frontend-ui-07.png" />
 
 - "**追加**" をクリック
 
@@ -466,7 +462,7 @@ Jun. 2023
 
       - "**値**": RootManageSharedAccessKey のプライマリ接続文字列
 
-        <img src="images/sb-connectionstring.png" width="400" />      
+        <img src="images/sb-connectionstring.png" width="600" />      
 
   - "**メタデータ**"
 
@@ -510,7 +506,7 @@ Jun. 2023
 
       - "**値**": キー
 
-        <img src="images/st-access-key.png" width="400" />      
+        <img src="images/st-access-key.png" width="600" />      
 
   - "**メタデータ**"
 
