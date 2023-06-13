@@ -484,7 +484,7 @@ Jun. 2023
 
   - "**コンテナーの詳細**"
 
-    - "**名前**": mcw-backend-api (任意)
+    - "**名前**": mcw-backend-api
 
     - "**イメージのソース**": Azure Container Registry
 
@@ -854,7 +854,7 @@ Jun. 2023
 
     - "**コンテナーの詳細**"
 
-      - "**名前**": mcw-frontend-ui (任意)
+      - "**名前**": mcw-frontend-ui
 
       - "**イメージのソース**": Azure Container Registry
 
