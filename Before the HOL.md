@@ -69,6 +69,10 @@ Mar. 2023
 
 - **sqlAdministratorPassword**: パスワード (8 - 128 文字/英大文字、小文字、数字、英数字以外の文字 (! など) のうち、3 つのカテゴリの文字を含む)
 
+- **storageAccountName**: ストレージ アカウントの名前 (3 ～ 24 文字/英小文字・数字のみ)
+
+- **serviceBusNamespace**: Service Bus 名前空間の名前 (6 ～ 50 文字/英数字、およびハイフン)
+
 ※ 事前にリソース グループの作成が必要
 
 ※ リソース グループは East US, East US2, West US2, West US3, Australia East, East Asia, UK South, North Europe のいずれかを選択
