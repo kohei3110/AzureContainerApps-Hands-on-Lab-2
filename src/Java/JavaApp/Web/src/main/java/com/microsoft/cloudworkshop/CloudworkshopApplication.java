@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.applicationinsights.attach.ApplicationInsights;
 import com.microsoft.cloudworkshop.models.Product;
 
 @SpringBootApplication
@@ -27,6 +28,7 @@ public class CloudworkshopApplication {
 	private static final String DAPR_HTTP_PORT = System.getenv().getOrDefault("DAPR_HTTP_PORT", "3500");
 
 	public static void main(String[] args) {
+		ApplicationInsights.attach();
 		SpringApplication.run(CloudworkshopApplication.class, args);
 	}
 

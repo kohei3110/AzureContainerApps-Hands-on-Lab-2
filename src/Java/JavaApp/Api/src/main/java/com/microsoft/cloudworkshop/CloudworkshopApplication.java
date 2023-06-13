@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.microsoft.cloudworkshop.models.Product;
+import com.microsoft.applicationinsights.attach.ApplicationInsights;
+import com.microsoft.cloudworkshop.ProductRepository;
 
 @SpringBootApplication
 @RestController
@@ -21,6 +23,7 @@ public class CloudworkshopApplication {
 	}
 
 	public static void main(String[] args) {
+		ApplicationInsights.attach();
 		SpringApplication.run(CloudworkshopApplication.class, args);
 	}
 
