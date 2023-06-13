@@ -13,6 +13,10 @@ Jun. 2023
 
 ## Appendix 1: Dapr サービス間テレメトリの取得
 
+<img src="images/mcw-appendix-1.png" />
+
+<br />
+
 ### Task 1: Application Insights の展開
 
 - [Azure ポータル](#https://portal.azure.com)へアクセス
@@ -435,6 +439,10 @@ Jun. 2023
 <br />
 
 ## Appendix 2: Dapr を介した外部サービスへの接続
+
+<img src="images/mcw-appendix-2.png" />
+
+<br />
 
 ### Task 1: Dapr コンポーネントの登録
 
