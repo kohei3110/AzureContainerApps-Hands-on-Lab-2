@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
+using Dapr.Client;
 
 namespace Aspnet.Backend.Api.Controllers;
 
@@ -11,11 +12,13 @@ public class ProductController: ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
     private readonly IConfiguration _configuration;
+    private readonly DaprClient _daprClient;
 
-    public ProductController(ILogger<ProductController> logger, IConfiguration configuration)
+    public ProductController(ILogger<ProductController> logger, IConfiguration configuration, DaprClient daprClient)
     {
         _logger = logger;
         _configuration = configuration;
+        _daprClient = daprClient;
     }
 
     [HttpGet(Name = "GetProducts")]
@@ -105,5 +108,23 @@ public class ProductController: ControllerBase
 
         string jsonStr = JsonSerializer.Serialize(product);
         return jsonStr;
+    }
+
+    [Dapr.Topic("pubsub-servicebus", "orders")]
+    [HttpPost("Order")]
+    public async Task<IActionResult> Order([FromBody] Order order)
+    {
+        _logger.LogInformation($"Order received: {order.OrderId}");
+
+        IReadOnlyDictionary<string, string> metadata = new Dictionary<string, string>()
+        {
+            { "blobName", $"{order.OrderId}.json" },
+        };
+
+        await _daprClient.InvokeBindingAsync("externalblobstore", "create", order, metadata);
+
+        _logger.LogInformation($"Invoked blob storage binding for order {order.OrderId}.json.");
+
+        return Ok();
     }
 }

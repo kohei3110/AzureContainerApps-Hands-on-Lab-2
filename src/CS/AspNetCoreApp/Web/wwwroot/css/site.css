@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.form-item {
+  border-top: 1px solid #ddd;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.result {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
