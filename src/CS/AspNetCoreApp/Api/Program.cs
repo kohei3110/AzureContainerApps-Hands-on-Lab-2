@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddDapr();
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.Configure<TelemetryConfiguration>(config =>
 {
@@ -28,6 +28,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 
+app.UseCloudEvents();
+
 app.MapControllers();
+
+app.MapSubscribeHandler();
 
 app.Run();

@@ -31,6 +31,7 @@ az containerapp env create \
  --logs-workspace-key $WORKSPACE_KEY \
  --dapr-instrumentation-key $INSTRUMENTATION_KEY
 
+
  # Container Apps の作成 (クイックスタート イメージ)
  # https://learn.microsoft.com/ja-jp/cli/azure/containerapp?view=azure-cli-latest#az-containerapp-create
 CONTAINERAPPS_NAME=''
