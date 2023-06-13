@@ -324,6 +324,76 @@ Jun. 2023
 
 <details>
   <summary>Java</summary>
+
+- [Azure ポータル](#https://portal.azure.com)へアクセス
+
+- 事前展開済みの SQL Database である "**AdventureWorksLT**" の管理ブレードへ移動し、**接続文字列** をクリック
+
+- JDBC (SQL 認証) の接続文字列をコピー
+
+- Visual Studio Code の Explorer で "**src**" - "**Java**" - "**JavaApp**" - "**Api**" - "**src**" - "**main**" - "**resources**" - "**application.properties**" を選択
+
+- 以下のコードを記述し、ファイルを保存
+
+  ```
+  logging.level.org.springframework.jdbc.core=DEBUG
+
+  spring.datasource.url=<コピーした接続文字列(jdbc:sqlserver://~~loginTimeout=30;)>
+  spring.datasource.username=sqladmin@<SQLServer名>
+  spring.datasource.password=<パスワード>
+
+  spring.sql.init.mode=always
+  ```
+
+  ※ 先の手順でコピーした SQL Database への文字列を使用
+
+  ※ Password を指定
+
+- 事前展開済みの Application Insights の管理ブレードへ移動し、**接続文字列** をコピー
+
+- Visual Studio Code の Explorer で "**src**" - "**Java**" - "**JavaApp**" - "**Api**" - "**src**" - "**main**" - "**resources**" - "**applicationinsights.json**" を選択
+
+- Application Insights の接続文字列を設定
+
+```json
+{
+  "connectionString": "InstrumentationKey=xxxxx"
+}
+```
+
+※ 先の手順でコピーした Application Insights の接続文字列を使用
+
+- Visual Studio Code の Explorer で "**src**" - "**Java**" - "**JavaApp**" - "**Web**" - "**src**" - "**main**" - "**resources**" - "**applicationinsights.json**" を選択
+
+- Application Insights の接続文字列を設定
+
+```json
+{
+  "connectionString": "InstrumentationKey=xxxxx"
+}
+```
+
+- "**Terminal**" - "**New Terminal**" を選択し、ウィンドウ下部にターミナルを表示
+
+- Api ディレクトリへ移動
+
+  ```
+  cd src/Java/JavaApp/Api
+  ```
+
+- アプリケーションを実行
+
+  ```
+  ./mvnw clean package
+  ./mvnw spring-boot:run
+  ```
+
+- Web ブラウザを起動し、"**http://localhost:8080/api/Product/**" へアクセス
+
+  <img src="images/java-run-02.png" />
+
+  ※ SQL Database から取得したデータが表示
+
 </details>
 
 <br />
@@ -375,6 +445,19 @@ Jun. 2023
 
   <details>
     <summary>Java</summary>
+
+  ```
+  docker build -t yourregistry.azurecr.io/api:v1 -f .docker/Java/dockerfile_backend_api .
+  ```
+
+  ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
+
+  ※ コマンドのオプション
+
+  - **-t**: 名前とタグを **名前:タグ** の形式で指定
+
+  - **-f**: dockerfile のパスを指定
+
   </details>
 
 - docker images コマンドを実行し、イメージが表示されることを確認
@@ -790,6 +873,18 @@ Jun. 2023
 
   <details>
     <summary>Java</summary>
+
+  ```
+  docker build -t yourregistry.azurecr.io/app:v1 -f .docker/Java/dockerfile_frontend_ui .
+  ```
+
+  ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
+
+  ※ コマンドのオプション
+
+  - **-t**: 名前とタグを **名前:タグ** の形式で指定
+
+  - **-f**: dockerfile のパスを指定
   </details>
 
 - docker images コマンドを実行し、イメージが表示されることを確認
@@ -1013,6 +1108,26 @@ Jun. 2023
 
 <details>
   <summary>Java</summary>
+
+- Visual Studio Code "**Terminal**" - "**New Terminal**" を選択し、ウィンドウ下部にターミナルを表示
+
+- Api ディレクトリへ移動
+
+  ```
+  cd src/Java/Job
+  ```
+
+- アプリケーションを実行
+
+  ```
+  ./mvnw clean package
+  ./mvnw spring-boot:run
+  ```
+
+- ターミナルに実行結果が表示
+
+      <img src="images/java-run-03.png" />
+
 </details>
 
 ### Task 2: Docker イメージの作成 (Web アプリ)
@@ -1048,6 +1163,19 @@ Jun. 2023
 
   <details>
     <summary>Java</summary>
+
+  ```
+  docker build -t yourregistry.azurecr.io/job:v1 -f .docker/Java/dockerfile_job .
+  ```
+
+  ※ yourreregistry.azurecr.io をコンテナー レジストリのログイン サーバーに変更
+
+  ※ コマンドのオプション
+
+  - **-t**: 名前とタグを **名前:タグ** の形式で指定
+
+  - **-f**: dockerfile のパスを指定
+
   </details>
 
 - docker images コマンドを実行し、イメージが表示されることを確認
