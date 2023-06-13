@@ -2,6 +2,6 @@ FROM mcr.microsoft.com/openjdk/jdk:17-ubuntu
 
 RUN mkdir /opt/app
 
-COPY src/Java/Job/target/\*.jar /opt/app/app.jar
+COPY src/Java/JavaApp/Web/target/\*.jar /opt/app/app.jar
 
 CMD [ "java", "-jar", "/opt/app/app.jar" ]
