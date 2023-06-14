@@ -4,4 +4,4 @@ RUN mkdir /opt/app
 
 COPY src/Java/JavaApp/Api/target/\*.jar /opt/app/app.jar
 
-CMD [ "java", "-jar", "/opt/app/app.jar" ]
+CMD [ "java", "-jar", "/opt/app/app.jar", "--spring.profiles.active=prod"]
