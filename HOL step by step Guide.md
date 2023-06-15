@@ -394,6 +394,18 @@ Jun. 2023
 
   ※ SQL Database から取得したデータが表示
 
+- Web ディレクトリへ移動
+
+  ```
+  cd ../Web
+  ```
+
+- jar ファイルを生成
+
+  ```
+  ./mvnw clean package
+  ```
+
 </details>
 
 <br />
