@@ -1114,7 +1114,7 @@ Jun. 2023
 
 - ターミナルに実行結果が表示
 
-      <img src="images/dotnet-run-03.png" />
+  <img src="images/dotnet-run-03.png" />
 
   </details>
 
@@ -1138,7 +1138,7 @@ Jun. 2023
 
 - ターミナルに実行結果が表示
 
-      <img src="images/java-run-03.png" />
+  <img src="images/java-run-03.png" />
 
 </details>
 
