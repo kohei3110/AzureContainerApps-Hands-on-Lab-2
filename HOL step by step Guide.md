@@ -314,7 +314,7 @@ Jun. 2023
   dotnet run
   ```
 
-- Web ブラウザを起動し、"**http://localhost:5000/api/Product/**" へアクセス
+- Web ブラウザを起動し、"**http://localhost:5000/api/Product**" へアクセス
 
   <img src="images/dotnet-run-02.png" />
 
@@ -388,7 +388,7 @@ Jun. 2023
   ./mvnw spring-boot:run
   ```
 
-- Web ブラウザを起動し、"**http://localhost:8080/api/Product/**" へアクセス
+- Web ブラウザを起動し、"**http://localhost:8080/api/Product**" へアクセス
 
   <img src="images/java-run-02.png" />
 
