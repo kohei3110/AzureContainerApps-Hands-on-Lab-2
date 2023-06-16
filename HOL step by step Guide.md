@@ -794,15 +794,26 @@ Jun. 2023
 
 - ポータル画面の右上の <img src="images/icon-cloud-shell.png" /> をクリックし、Cloud Shell を表示
 
-- リビジョンを再起動
+- 左側のメニューから "**リビジョン管理**" を選択
 
-  ```
-  az containerapp revision restart -n {your_container_app} -g {your_resource_group} --revision {revision_name}
-  ```
+- 対象のリビジョンをクリックし、右ペインに表示されるリビジョンの詳細から "**再起動**" をクリック
 
-  ※ {your_container_app}, {your_resource_group} をコンテナー アプリ名、リソース グループ名に変更
+  <img src="images/restart-revision.png" />
 
-  ※ {revision_name} はリビジョン管理から取得
+  <details>
+    <summary>Cloud Shell からの再起動</summary>
+
+    ```
+    az containerapp revision restart -n {your_container_app} -g {your_resource_group} --revision {revision_name}
+    ```
+
+    ※ {your_container_app}, {your_resource_group} をコンテナー アプリ名、リソース グループ名に変更
+
+    ※ {revision_name} はリビジョン管理から取得
+
+  </details>
+
+<br />
 
 - "**概要**" タブを選択し、"**アプリケーション URL**" をコピー
 
