@@ -349,6 +349,28 @@ Jun. 2023
 
   ※ Password を指定
 
+- Visual Studio Code の Explorer で "**src**" - "**Java**" - "**JavaApp**" - "**Api**" - "**src**" - "**main**" - "**resources**" - "**application-prod.properties**" を選択
+
+- 以下のコードを記述し、ファイルを保存
+
+  ```
+  logging.level.org.springframework.jdbc.core=DEBUG
+  ```
+
+spring.datasource.url=${SqlConnectionString}
+spring.datasource.username=sqladmin@<SQL*SERVER*名>
+spring.datasource.password=<パスワード>
+
+spring.sql.init.mode=always
+
+server.port=80
+
+````
+
+  ※ 先の手順でコピーした SQL Database への文字列を使用
+
+  ※ Password を指定
+
 - 事前展開済みの Application Insights の管理ブレードへ移動し、**接続文字列** をコピー
 
 - Visual Studio Code の Explorer で "**src**" - "**Java**" - "**JavaApp**" - "**Api**" - "**src**" - "**main**" - "**resources**" - "**applicationinsights.json**" を選択
@@ -359,7 +381,7 @@ Jun. 2023
 {
   "connectionString": "InstrumentationKey=xxxxx"
 }
-```
+````
 
 ※ 先の手順でコピーした Application Insights の接続文字列を使用
 
@@ -540,7 +562,7 @@ Jun. 2023
 
   <img src="images/add-secret-03.png" />
 
-- Application Insights のインストルメンテーション キーをシークレットへ登録
+- Application Insights のインストルメンテーション キーをシークレットへ登録（C#のみ）
 
   - "**キー**": applicationinsights-key
 
@@ -554,7 +576,7 @@ Jun. 2023
 
     <img src="images/application-insights-key.png" />
 
-- ２つのシークレットの登録を確認
+- ２つのシークレットの登録を確認（Java は 1 つで OK）
 
   <img src="images/add-secret-05.png" />
 
@@ -610,7 +632,7 @@ Jun. 2023
 
       - "**値**": sqlconnectionstring
 
-    - Application Insights インストルメンテーション キー
+    - Application Insights インストルメンテーション キー（ C# のみ）
 
       - "**名前**": ApplicationInsights\_\_InstrumentationKey
 
@@ -803,13 +825,13 @@ Jun. 2023
   <details>
     <summary>Cloud Shell からの再起動</summary>
 
-    ```
-    az containerapp revision restart -n {your_container_app} -g {your_resource_group} --revision {revision_name}
-    ```
+  ```
+  az containerapp revision restart -n {your_container_app} -g {your_resource_group} --revision {revision_name}
+  ```
 
-    ※ {your_container_app}, {your_resource_group} をコンテナー アプリ名、リソース グループ名に変更
+  ※ {your_container_app}, {your_resource_group} をコンテナー アプリ名、リソース グループ名に変更
 
-    ※ {revision_name} はリビジョン管理から取得
+  ※ {revision_name} はリビジョン管理から取得
 
   </details>
 

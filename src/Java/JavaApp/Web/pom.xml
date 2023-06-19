@@ -26,19 +26,19 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-		<groupId>io.dapr</groupId>
-		<artifactId>dapr-sdk</artifactId>
-		<version>1.7.1</version>
+			<groupId>io.dapr</groupId>
+			<artifactId>dapr-sdk</artifactId>
+			<version>1.10.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-		<groupId>io.dapr</groupId>
-		<artifactId>dapr-sdk-actors</artifactId>
-		<version>1.7.1</version>
+			<groupId>io.dapr</groupId>
+			<artifactId>dapr-sdk-actors</artifactId>
+			<version>1.10.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-		<groupId>io.dapr</groupId>
-		<artifactId>dapr-sdk-springboot</artifactId>
-		<version>1.7.1</version>
+			<groupId>io.dapr</groupId>
+			<artifactId>dapr-sdk-springboot</artifactId>
+			<version>1.10.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.microsoft.azure</groupId>
