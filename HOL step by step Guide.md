@@ -1104,7 +1104,7 @@ server.port=80
 
     - "**名前**": end / "**値**": 0 15 \* \* \* (任意)
 
-    - "**名前**": desireReplicas / "**値**": 3
+    - "**名前**": desiredReplicas / "**値**": 3
 
     <img src="images/keda-scaling-03.png" />
 
