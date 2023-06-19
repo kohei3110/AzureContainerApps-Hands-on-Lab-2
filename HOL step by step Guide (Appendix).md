@@ -36,7 +36,7 @@ Jun. 2023
       - "**サブスクリプション**": ワークショップで使用中のサブスクリプション
 
       - "**リソース グループ**": ワークショップで使用中のリソース グループ
-    
+
     - "**インスタンスの詳細**"
 
       - "**名前**": appi-workshop-q4 (任意)
@@ -235,17 +235,25 @@ Jun. 2023
   <details>
     <summary>C#</summary>
 
-    ADO.NET (SQL 認証) の接続文字列
+  ADO.NET (SQL 認証) の接続文字列
 
-    ```
-    Server=tcp:{your_sql_server}.database.windows.net,1433;Initial Catalog=AdventureWorksLT;Persist Security Info=False;User ID=sqladmin;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-    ```
+  ```
+  Server=tcp:{your_sql_server}.database.windows.net,1433;Initial Catalog=AdventureWorksLT;Persist Security Info=False;User ID=sqladmin;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+  ```
 
-    ※ {your_sql_server}, {your_password} は使用するものに変更
+  ※ {your_sql_server}, {your_password} は使用するものに変更
   </details>
 
   <details>
     <summary>Java</summary>
+
+  JDBC (SQL 認証) の接続文字列
+
+  ```
+  jdbc:sqlserver://{your_sql_server}.database.windows.net:1433;database=AdventureWorksLT;user=sqladmin@{your_sql_server};password={your_password_here};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+  ```
+
+  ※ {your_sql_server}, {your_password} は使用するものに変更
   </details>
 
 <br />
@@ -285,7 +293,7 @@ Jun. 2023
     - "**CPU コア**": 0.25
 
     - "**メモリ (Gi)**": 0.5
-  
+
   - "**環境変数**"
 
     ※ "**＋追加**" をクリックし、SQL Database への接続文字列を環境変数として追加
@@ -381,16 +389,16 @@ Jun. 2023
     - "**CPU コア**": 0.25
 
     - "**メモリ (Gi)**": 0.5
-  
+
   - "**環境変数**"
 
     ※ "**＋追加**" をクリックし、環境変数を追加
 
-      - Dapr アプリ ID
+    - Dapr アプリ ID
 
-        - "**名前**": AppId
+      - "**名前**": AppId
 
-        - "**値**": backend-api (API アプリの Dapr アプリ ID)
+      - "**値**": backend-api (API アプリの Dapr アプリ ID)
 
     <img src="images/create-frontend-ui-07.png" />
 
@@ -470,7 +478,7 @@ Jun. 2023
 
       - "**値**": RootManageSharedAccessKey のプライマリ接続文字列
 
-        <img src="images/sb-connectionstring.png" width="600" />      
+        <img src="images/sb-connectionstring.png" width="600" />
 
   - "**メタデータ**"
 
@@ -514,7 +522,7 @@ Jun. 2023
 
       - "**値**": キー
 
-        <img src="images/st-access-key.png" width="600" />      
+        <img src="images/st-access-key.png" width="600" />
 
   - "**メタデータ**"
 
@@ -527,7 +535,7 @@ Jun. 2023
         - "**ソース**": 手動エントリ
 
         - "**値**": ストレージ アカウント名
-      
+
       - キー
 
         - "**名前**": accountKey
@@ -535,7 +543,7 @@ Jun. 2023
         - "**ソース**": シークレットの参照
 
         - "**値**": キー
-      
+
       - コンテナ名
 
         - "**名前**": containerName
@@ -576,6 +584,8 @@ Jun. 2023
 
 ### Task 2: 動作確認
 
+<details>
+  <summary>C#</summary>
 - コンテナー アプリ (Web) の管理ブレードへ移動し、"**概要**" タブを選択
 
 - "**アプリケーション URL**" をクリックし、新しいタブでアプリケーションを表示
@@ -603,3 +613,25 @@ Jun. 2023
 - Application Insights の管理ブレードへ移動し、"**アプリケーション マップ**" を選択
 
   <img src="images/application-insights-map-dapr-03.png" />
+
+</details>
+
+<details>
+  <summary>Java</summary>
+- コマンドプロンプトから以下のコマンドを実行
+
+```
+curl -X POST  <FrontEndアプリのURL>/Orders
+```
+
+- コンテナー アプリ (Web) の管理ブレードへ移動し、"**ログ ストリーム**" を選択
+
+  ※ ログが記録されていることを確認
+
+  <img src="images/add-dapr-component-06.png" />
+
+- Service Bus の管理ブレードでメッセージを受信していることを確認
+
+  <img src="images/service-bus-summary.png" />
+
+</details>
