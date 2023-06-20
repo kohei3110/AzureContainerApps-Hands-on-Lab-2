@@ -355,15 +355,15 @@ Jun. 2023
 
   ```
   logging.level.org.springframework.jdbc.core=DEBUG
-  ```
+  
 
-spring.datasource.url=${SqlConnectionString}
-spring.datasource.username=sqladmin@<SQL*SERVER*名>
-spring.datasource.password=<パスワード>
+  spring.datasource.url=${SqlConnectionString}
+  spring.datasource.username=sqladmin@<SQL*SERVER*名>
+  spring.datasource.password=<パスワード>
 
-spring.sql.init.mode=always
+  spring.sql.init.mode=always
 
-server.port=80
+  server.port=80
 
 ````
 
