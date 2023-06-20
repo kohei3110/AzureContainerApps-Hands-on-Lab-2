@@ -381,19 +381,11 @@ Jun. 2023
 {
   "connectionString": "InstrumentationKey=xxxxx"
 }
-````
+```
 
 ※ 先の手順でコピーした Application Insights の接続文字列を使用
 
-- Visual Studio Code の Explorer で "**src**" - "**Java**" - "**JavaApp**" - "**Web**" - "**src**" - "**main**" - "**resources**" - "**applicationinsights.json**" を選択
 
-- Application Insights の接続文字列を設定
-
-```json
-{
-  "connectionString": "InstrumentationKey=xxxxx"
-}
-```
 
 - "**Terminal**" - "**New Terminal**" を選択し、ウィンドウ下部にターミナルを表示
 
