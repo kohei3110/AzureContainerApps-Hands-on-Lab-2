@@ -365,8 +365,6 @@ Jun. 2023
 
   server.port=80
 
-````
-
   ※ 先の手順でコピーした SQL Database への文字列を使用
 
   ※ Password を指定
@@ -383,10 +381,8 @@ Jun. 2023
 }
 ```
 
-
 ※ 先の手順でコピーした Application Insights の接続文字列を使用
 
-````
 - "**Terminal**" - "**New Terminal**" を選択し、ウィンドウ下部にターミナルを表示
 
 - Api ディレクトリへ移動
